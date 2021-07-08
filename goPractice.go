@@ -1,14 +1,11 @@
 package main
 
 import (
-	"bufio"
+	"fmt"
 	"os"
+	"time"
 )
 
 func main() {
-	buffer := bufio.NewWriter(os.Stdout)
-	buffer.WriteString("bufio.Writer")
-	buffer.Flush()
-	buffer.WriteString("example\n")
-	buffer.Flush()
+	fmt.Fprintf(os.Stdout, "Write with os.Stdout at %v", time.Now())
 }
