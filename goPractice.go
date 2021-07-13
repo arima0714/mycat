@@ -1,8 +1,10 @@
 package main
 
 import (
+	"bytes"
 	"encoding/binary"
 	"fmt"
+	"hash/crc32"
 	"io"
 	"os"
 )
@@ -38,13 +40,39 @@ func readChunks(file *os.File) []io.Reader {
 	return chunks
 }
 
+func textChunk(text string) io.Reader {
+	byteData := []byte(text)
+	var buffer bytes.Buffer
+	binary.Write(&buffer, binary.BigEndian, int32(len(byteData)))
+	buffer.WriteString("tEXt")
+	buffer.Write(byteData)
+	// CRCを計算して追加
+	crc := crc32.NewIEEE()
+	io.WriteString(crc, "tEXt")
+	binary.Write(&buffer, binary.BigEndian, crc.Sum32())
+	return &buffer
+}
+
 func main() {
 	file, err := os.Open("Lenna.png")
 	if err != nil {
 		panic(err)
 	}
+	defer file.Close()
+	newFile, err := os.Create("Lenna2.png")
+	if err != nil {
+		panic(err)
+	}
+	defer newFile.Close()
 	chunks := readChunks(file)
-	for _, chunk := range chunks {
-		dumpChunk(chunk)
+	// シグニチャ書き込み
+	io.WriteString(newFile, "\x89PNG\r\n\x1a\n")
+	// 先頭に必要なIHDRチャンクを書き込み
+	io.Copy(newFile, chunks[0])
+	// テキストチャンクを追加
+	io.Copy(newFile, textChunk("ASCII PROGRAMMING++"))
+	// 残りのチャンクを追加
+	for _, chunk := range chunks[1:] {
+		io.Copy(newFile, chunk)
 	}
 }
