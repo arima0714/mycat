@@ -1,17 +1,16 @@
 package main
-
 import (
-	"fmt"
-	"strings"
+	"bytes"
+	"io"
+	"os"
 )
 
-var source = "123 1.234 1.0e4 test"
-
 func main() {
-	reader := strings.NewReader(source)
-	var i int
-	var f, g float64
-	var s string
-	fmt.Fscan(reader, &i, &f, &g, &s)
-	fmt.Printf("i=%#v f=%#v g=%#v s=%#v\n", i, f, g, s)
+	header := bytes.NewBufferString("----- HEADER -----\n")
+	content := bytes.NewBufferString("Example of io.MultiReader\n")
+	footer := bytes.NewBufferString("----- FOOTER -----\n")
+
+	reader := io.MultiReader(header, content, footer)
+	// 全てのreaderを結合した出力が表示
+	io.Copy(os.Stdout, reader)
 }
