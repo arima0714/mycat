@@ -1,21 +1,17 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"strings"
 )
 
-var source = `1行目
-2行目
-3行目
-`
+var source = "123 1.234 1.0e4 test"
 
 func main() {
-	reader := bufio.NewReader(strings.NewReader(source))
-	for {
-		line, _ := reader.ReadString('\n')
-		fmt.Printf("%#v\n", line)
-		break
-	}
+	reader := strings.NewReader(source)
+	var i int
+	var f, g float64
+	var s string
+	fmt.Fscan(reader, &i, &f, &g, &s)
+	fmt.Printf("i=%#v f=%#v g=%#v s=%#v\n", i, f, g, s)
 }
