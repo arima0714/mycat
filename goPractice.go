@@ -1,8 +1,11 @@
 package main
 
 import (
+	"bufio"
+	"fmt"
 	"io"
 	"net"
+	"net/http"
 	"os"
 )
 
@@ -11,6 +14,11 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	conn.Write([]byte("GET / HTTP/1.0\r\nHost: ascii.jp\r\n\r\n"))
-	io.Copy(os.Stdout, conn)
+	conn.Write([]byte("GET / HTTP/1.0\r\n\r\nHost: ascii.jp\r\n\r\n"))
+	res, err := http.ReadResponse(bufio.NewReader(conn), nil)
+	// ヘッダーを表示する
+	fmt.Println(res.Header)
+	// ボディーを表示し、Close()する
+	defer res.Body.Close()
+	io.Copy(os.Stdout, res.Body)
 }
