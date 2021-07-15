@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"bufio"
 )
 
 func exists(name string) bool {
@@ -21,12 +22,15 @@ func main() {
 			errString := fmt.Sprintf("cat: %s: No such file or directory\n", fileName)
 			fmt.Fprint(os.Stdout, errString)
 			continue
-		} else {
-			fmt.Println(fileName)
 		}
 		// ファイルを開く
 		file, _ := os.Open(fileName)
 		defer file.Close()
 		// ファイル内のテキストを改行ごとに表示
+		fileBuf := bufio.NewScanner(file)
+		for i := 1; fileBuf.Scan(); i++ {
+			line := fileBuf.Text()
+			fmt.Println(line)
+		}
 	}
 }
