@@ -1,19 +1,14 @@
 package main
 
 import (
-	"bytes"
-	"fmt"
-	"io"
-	"io/ioutil"
+	"os"
 )
 
 func main() {
-	var buffer bytes.Buffer
-	reader := bytes.NewBufferString("Example of io.TeeReader\n")
-	teeReader := io.TeeReader(reader, &buffer)
-	// データを読み捨てる
-	_, _ = ioutil.ReadAll(teeReader)
-
-	// けどバッファに残っている
-	fmt.Println(buffer.String())
+	file, err := os.Create("test.txt")
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+	file.Write([]byte("system call example\n"))
 }
