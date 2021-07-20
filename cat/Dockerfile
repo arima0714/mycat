@@ -5,7 +5,8 @@ RUN mkdir -p /build
 RUN go build -o=/build/cat cat.go
 
 FROM ubuntu
-COPY --from=build-env /build/cat /build/app
-RUN chmod u+x /build/app
+COPY --from=build-env /build/cat /build/cat
+RUN chmod u+x /build/cat
+WORKDIR /build/
 
 RUN /bin/bash
