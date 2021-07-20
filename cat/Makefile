@@ -4,4 +4,4 @@ build:
 
 run:
 	echo "bocker run を実行する"
-	docker run -it --rm 
+	docker run -it --rm gopractice
