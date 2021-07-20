@@ -1,10 +1,10 @@
 package main
 
 import (
+	"bufio"
 	"flag"
 	"fmt"
 	"os"
-	"bufio"
 )
 
 func exists(name string) bool {
@@ -33,4 +33,14 @@ func main() {
 			fmt.Println(line)
 		}
 	}
+	// if len(args) == 0 {
+	// 	for ;; {
+	// 		var input string
+	// 		fmt.Scanln(input)
+	// 		fmt.Println(input)
+	// 	}
+	// }
+	input := bufio.NewScanner(os.Stdin)
+	input.Scan()
+	fmt.Println(input.Text())
 }
