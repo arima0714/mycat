@@ -22,14 +22,14 @@
 
 ```
 docker images | grep gopractice
-gopractice_not_optimization   latest    03f89e8722d8   4 minutes ago    867MB
-gopractice                    latest    1083436f0346   7 minutes ago    10.1MB
+gopractice_not_optimization   latest    03f89e8722d8   19 minutes ago   867MB
+gopractice                    latest    640cb48f7f42   22 minutes ago   7.83MB
 ```
 
 $$
-10.1 / 867 = 0.011...
+7.83 / 867 = 0.0090...
 $$
 
-マルチステージ・ビルドを用いることで、イメージサイズを1％にまで削減することができた。
+マルチステージ・ビルドを用いることで、イメージサイズを0.9％にまで削減することができた。
 
 [^dockerMultiStage]:マルチステージ・ビルドを使う（https://docs.docker.jp/develop/develop-images/multistage-build.html）
