@@ -27,9 +27,9 @@ gopractice                    latest    640cb48f7f42   22 minutes ago   7.83MB
 ```
 
 $$
-7.83 / 867 = 0.0090...
+7.16 / 867 = 0.0082...
 $$
 
-マルチステージ・ビルドを用いることで、イメージサイズを0.9％にまで削減することができた。
+マルチステージ・ビルドを用いることで、イメージサイズを0.8％にまで削減することができた。
 
 [^dockerMultiStage]:マルチステージ・ビルドを使う（https://docs.docker.jp/develop/develop-images/multistage-build.html）
