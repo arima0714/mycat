@@ -4,9 +4,7 @@ COPY . .
 RUN mkdir -p /build
 RUN go build -o=/build/cat cat.go
 
-FROM ubuntu
-COPY --from=build-env /build/cat /build/cat
-RUN chmod u+x /build/cat
-WORKDIR /build/
-
-RUN /bin/bash
+FROM alpine
+WORKDIR /app
+COPY --from=build-env /build/cat /app/cat
+RUN chmod u+x /app/cat
