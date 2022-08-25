@@ -2,9 +2,10 @@ package main
 
 import (
 	"bufio"
-	"flag"
 	"fmt"
 	"os"
+
+	"gopkg.in/alecthomas/kingpin.v2"
 )
 
 func exists(name string) bool {
@@ -12,7 +13,7 @@ func exists(name string) bool {
 	return os.IsNotExist(err)
 }
 
-func output(fileName...string) {
+func output(fileName ...string) {
 	if len(fileName) == 0 {
 		return
 	}
@@ -31,15 +32,19 @@ func output(fileName...string) {
 	}
 }
 
+var (
+	args = kingpin.Arg("filenames", "filenames").Strings()
+)
+
 func main() {
-	flag.Parse()
-	args := flag.Args()
+	kingpin.Parse()
 	// ファイルが存在しなければ「cat: <ファイル名>: No such file or directory」と表示
-	for argIndex := 0; argIndex < len(args); argIndex++ {
-		fileName := args[argIndex]
+	filenames := *args
+	for argIndex := 0; argIndex < len(filenames); argIndex++ {
+		fileName := filenames[argIndex]
 		output(fileName)
 	}
-	if len(args) == 0 {
+	if len(*args) == 0 {
 		for {
 			input := bufio.NewScanner(os.Stdin)
 			input.Scan()
