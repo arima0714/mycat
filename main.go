@@ -28,12 +28,16 @@ func output(fileName ...string) {
 	fileBuf := bufio.NewScanner(file)
 	for i := 1; fileBuf.Scan(); i++ {
 		line := fileBuf.Text()
+		if *showends {
+			line = line + "$"
+		}
 		fmt.Println(line)
 	}
 }
 
 var (
-	args = kingpin.Arg("filenames", "filenames").Strings()
+	args     = kingpin.Arg("filenames", "filenames").Strings()
+	showends = kingpin.Flag("show-ends", "show \"$\" end of line").Short('E').Bool()
 )
 
 func main() {
@@ -48,7 +52,11 @@ func main() {
 		for {
 			input := bufio.NewScanner(os.Stdin)
 			input.Scan()
-			fmt.Println(input.Text())
+			line := input.Text()
+			if *showends {
+				line = line + "$"
+			}
+			fmt.Println(line)
 		}
 	}
 }
