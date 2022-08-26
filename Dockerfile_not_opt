@@ -1,9 +1,0 @@
-FROM golang AS build-env
-WORKDIR /go/src/app
-COPY . .
-RUN mkdir -p /build
-RUN go build -o=/build/cat cat.go
-RUN chmod u+x /build/cat
-WORKDIR /build/
-
-RUN /bin/bash
