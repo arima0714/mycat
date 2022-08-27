@@ -1,6 +1,7 @@
+.PHONY: build
 build:
-	echo "go build を実行し、catを作成する"
-	go build main.go
-	mv main cat
+	go build
 
-clean:; rm -rf main cat
+.PHONY: clean
+clean:
+	go clean
