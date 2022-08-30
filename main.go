@@ -3,8 +3,10 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
+	"strings"
 
 	"gopkg.in/alecthomas/kingpin.v2"
 )
@@ -15,7 +17,24 @@ var (
 )
 
 func doCat(filename ...string) {
-	if len(filename) == 0 {
+	pipedFile, err := os.Stdin.Stat()
+	if err != nil {
+		panic(err)
+	}
+	if pipedFile.Size() > 0 {
+		fmt.Println("there is something to read")
+		b, err := ioutil.ReadAll(os.Stdin)
+		if err != nil {
+			panic(err)
+		}
+		lines := strings.Split(string(b), "\n")
+		for i := 0; i < len(lines); i++ {
+			line := lines[i]
+			processLine(&line)
+			fmt.Println(line)
+		}
+		fmt.Println()
+	} else if len(filename) == 0 {
 		for {
 			input := bufio.NewScanner(os.Stdin)
 			input.Scan()
