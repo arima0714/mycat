@@ -17,5 +17,5 @@ func Test_processLine(t *testing.T) {
 	var actually *string
 	processLine(line)
 	actually = line
-	assert.Equalf(t, expected, actually, "expected = %s, actually = %s", expected, actually)
+	assert.Equal(t, expected, actually)
 }
