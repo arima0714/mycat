@@ -11,11 +11,18 @@ func Test_doCat(t *testing.T) {
 }
 
 func Test_processLine(t *testing.T) {
-	var line *string
-	*line = "line"
+	*showends = true
+	line := "line"
 	var expected string = "line$"
-	var actually *string
-	processLine(line)
-	actually = line
-	assert.Equal(t, expected, actually)
+	var actual string
+	processLine(&line)
+	actual = line
+	assert.Equal(t, expected, actual)
+
+	*showends = false
+	line = "line"
+	expected = "line"
+	processLine(&line)
+	actual = line
+	assert.Equal(t, expected, actual)
 }
