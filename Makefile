@@ -5,3 +5,7 @@ build:
 .PHONY: clean
 clean:
 	go clean
+
+.PHONY: test
+test:
+	go test -v
