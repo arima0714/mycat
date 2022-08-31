@@ -22,7 +22,6 @@ func doCat(filename ...string) {
 		panic(err)
 	}
 	if pipedFile.Size() > 0 {
-		fmt.Println("there is something to read")
 		b, err := ioutil.ReadAll(os.Stdin)
 		if err != nil {
 			panic(err)
@@ -33,7 +32,6 @@ func doCat(filename ...string) {
 			processLine(&line)
 			fmt.Println(line)
 		}
-		fmt.Println()
 	} else if len(filename) == 0 {
 		for {
 			input := bufio.NewScanner(os.Stdin)
