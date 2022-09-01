@@ -48,11 +48,6 @@ func ExampleDoCat2() {
 
 }
 
-func Test_doCat(t *testing.T) {
-	// リダイレクトから読む場合
-
-}
-
 func Test_processLine(t *testing.T) {
 	*showends = true
 	line := "line"
