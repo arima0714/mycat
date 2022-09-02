@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"io"
 	"log"
 	"os"
 
@@ -14,29 +15,14 @@ var (
 	showends = kingpin.Flag("show-ends", "show \"$\" end of line").Short('E').Bool()
 )
 
-func doCat(filename ...string) {
-	var buf *bufio.Scanner
-	if len(filename) == 0 {
-		buf = bufio.NewScanner(os.Stdin)
-	} else {
-		file, err := os.Open(filename[0])
-		if err != nil {
-			log.Fatal(err)
-		}
-		defer file.Close()
-		buf = bufio.NewScanner(file)
-
-	}
-	for buf.Scan(){
+func doCat(f io.Reader) {
+	buf := bufio.NewScanner(f)
+	for buf.Scan() {
 		line := buf.Text()
-		processLine(&line)
+		if *showends {
+			line += "$"
+		}
 		fmt.Println(line)
-	}
-}
-
-func processLine(line *string) {
-	if *showends {
-		*line = *line + "$"
 	}
 }
 
@@ -45,11 +31,15 @@ func main() {
 	filenames := *args
 
 	if len(filenames) == 0 {
-		doCat()
+		doCat(os.Stdin)
 	} else {
-		for i := 0; i < len(filenames); i++ {
-			filename := filenames[i]
-			doCat(filename)
+		for _, file := range filenames {
+			f, err := os.Open(file)
+			if err != nil {
+				log.Fatal(err)
+			}
+			defer f.Close()
+			doCat(f)
 		}
 	}
 }

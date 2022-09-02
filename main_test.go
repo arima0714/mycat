@@ -1,4 +1,4 @@
-package main
+package main_test
 
 import (
 	"io/ioutil"
@@ -48,7 +48,7 @@ func ExampleDoCat2() {
 
 }
 
-func Test_processLine(t *testing.T) {
+func TestprocessLine(t *testing.T) {
 	*showends = true
 	line := "line"
 	var expected string = "line$"

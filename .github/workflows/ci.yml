@@ -22,18 +22,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-go-
 
-  build:
+  build_and_test:
     needs: setup
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: build
-        run: make build
-
-  test:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: test
+      - run: make build
         run: make test
