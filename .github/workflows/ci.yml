@@ -3,7 +3,7 @@ name: go-ci
 on: [push, pull_request]
 
 jobs:
-  setup:
+  ci:
     runs-on: ubuntu-latest
     steps:
       - name: set up
@@ -13,7 +13,9 @@ jobs:
         id: go
       - name: check out
         uses: actions/checkout@v2
-      - name: Cache
+      - name: check_go_mod_tidy
+        uses: evantorrie/mott-the-tidier@v1-beta
+      - name: cache
         uses: actions/cache@v3
         with:
           path: ~/go/pkg/mod
