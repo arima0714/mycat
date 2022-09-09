@@ -1,13 +1,16 @@
 # cat コマンド
 
-## 実現したい機能
+## テストの実行
 
-- ファイルが存在しなければ標準入力から読み込む
+```sh
+$ make test
+```
 
 ## 実現した機能
 
-- `cat file1`:file1 の内容を表示する
-- `cat file1 file2`:file1 および file2 の内容を連結し、端末上にその結果を表示する
-- `cat --help`:コマンドの使用方法を表示
-- `cat --show-ends file1`:各行の末尾に$を追加した file1 の内容を表示する
-- `cat -E file1`:各行の末尾に$を追加した file1 の内容を表示する
+- `mycat file1`:file1 の内容を表示する。
+- `mycat < file1`:file1 の内容を表示する。
+- `mycat file1 file2`:file1 および file2 の内容を連結し、端末上にその結果を表示する。
+- `mycat --help`:コマンドの使用方法を表示する。
+- `mycat --show-ends file1`:各行の末尾に$を追加した file1 の内容を表示する。
+- `mycat -E file1`:各行の末尾に$を追加した file1 の内容を表示する。

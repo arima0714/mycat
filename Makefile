@@ -1,3 +1,6 @@
+.PHONY: all
+all: build
+
 .PHONY: build
 build:
 	go build
@@ -8,4 +11,4 @@ clean:
 
 .PHONY: test
 test:
-	go test
+	go test -v -shuffle=on -count=1
