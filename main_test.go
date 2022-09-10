@@ -20,12 +20,14 @@ func ExampleDoCat() {
 func ExampleDoCat2() {
 	var stdin bytes.Buffer
 	*main.Showends = true
-	stdin.Write([]byte("test1234\n"))
+	stdin.Write([]byte("test1234\n1234test\n1t2e3s4t\n"))
 
 	main.DoCat(&stdin)
 
 	// Output:
 	// test1234$
+	// 1234test$
+	// 1t2e3s4t$
 	*main.Showends = false
 }
 
