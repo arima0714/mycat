@@ -11,4 +11,4 @@ clean:
 
 .PHONY: test
 test:
-	go test -v -shuffle=on -count=1
+	go test -shuffle=on -count=1
