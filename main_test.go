@@ -3,8 +3,6 @@ package main_test
 import (
 	"bytes"
 	"github.com/arima0714/mycat"
-	"log"
-	"os"
 )
 
 func ExampleDoCat() {
@@ -32,14 +30,10 @@ func ExampleDoCat2() {
 }
 
 func ExampleDoCat3() {
+	var stdin bytes.Buffer
 	*main.Showends = true
-	f, err := os.Open("./test/test00")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer f.Close()
-
-	main.DoCat(f)
+	stdin.Write([]byte("test01\ntest02\ntest03"))
+	main.DoCat(&stdin)
 
 	// Output:
 	// test01$
