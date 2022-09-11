@@ -1,6 +1,6 @@
 package main
 
 var (
-	DoCat    = doCat
-	Showends = showends
+	Export_doCat    = doCat
+	Export_showends = showends
 )
