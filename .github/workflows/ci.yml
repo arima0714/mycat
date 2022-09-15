@@ -1,6 +1,6 @@
 name: go-ci
 
-on: [push, pull_request]
+on: [pull_request]
 
 env:
   go_version: ^1.19
@@ -16,8 +16,6 @@ jobs:
         id: go
       - name: check out
         uses: actions/checkout@v3
-      - name: check_go_mod_tidy
-        uses: evantorrie/mott-the-tidier@v1-beta
       - name: cache
         uses: actions/cache@v3
         with:
