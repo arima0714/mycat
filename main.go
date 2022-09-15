@@ -6,7 +6,6 @@ import (
 	"io"
 	"log"
 	"os"
-	"strings"
 
 	"gopkg.in/alecthomas/kingpin.v2"
 )
@@ -19,18 +18,13 @@ var (
 func doCat(f io.Reader) {
 	r := bufio.NewReader(f)
 	for {
-		line, err := r.ReadString('\n')
-		line = strings.Replace(line, "\n", "", -1)
-		fmt.Print(line)
+		r, _, err := r.ReadRune()
 		if err == io.EOF {
 			break
-		} else {
-			endOfLine := ""
-			if *showends {
-				endOfLine += "$"
-			}
-			fmt.Println(endOfLine)
+		} else if r == '\n' && *showends {
+			fmt.Print("$")
 		}
+		fmt.Print(string(r))
 	}
 }
 
