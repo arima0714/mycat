@@ -1,0 +1,25 @@
+name: check-go-mod-tidy
+
+on: [pull_request]
+
+env:
+  go_version: ^1.19
+
+jobs:
+  check_go_mod_tidy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: set up
+        uses: actions/setup-go@v2
+        with:
+          go-version: ${{ env.go_version }}
+        id: go
+      - name: check out
+        uses: actions/checkout@v3
+      - name: check go mod tidy
+        run: |
+          go mod tidy
+          result="$(git status | grep modified | wc -l)"
+          if [ "$result" -gt 0 ] ; then
+              exit 1
+          fi
