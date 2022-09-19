@@ -21,6 +21,8 @@ func doCat(f io.Reader) {
 		r, _, err := r.ReadRune()
 		if err == io.EOF {
 			break
+		} else if err != nil {
+			log.Fatal(err)
 		} else if r == '\n' && *showends {
 			fmt.Print("$")
 		}
