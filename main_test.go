@@ -2,24 +2,26 @@ package main_test
 
 import (
 	"bytes"
+
+	"github.com/arima0714/mycat"
 )
 
 func ExampleDoCat() {
-	var stdin bytes.Buffer
-	stdin.Write([]byte("test1234"))
+	var f bytes.Buffer
+	f.Write([]byte("test1234"))
 
-	main.ExpDoCat(&stdin)
+	main.ExpDoCat(&f)
 
 	// Output:
 	// test1234
 }
 
 func ExampleDoCat2() {
-	var stdin bytes.Buffer
+	var f bytes.Buffer
 	*main.ExpShowends = true
-	stdin.Write([]byte("test1234\n1234test\n1t2e3s4t\n"))
+	f.Write([]byte("test1234\n1234test\n1t2e3s4t\n"))
 
-	main.ExpDoCat(&stdin)
+	main.ExpDoCat(&f)
 
 	// Output:
 	// test1234$
@@ -29,10 +31,10 @@ func ExampleDoCat2() {
 }
 
 func ExampleDoCat3() {
-	var stdin bytes.Buffer
+	var f bytes.Buffer
 	*main.ExpShowends = true
-	stdin.Write([]byte("test01\ntest02\ntest03"))
-	main.ExpDoCat(&stdin)
+	f.Write([]byte("test01\ntest02\ntest03"))
+	main.ExpDoCat(&f)
 
 	// Output:
 	// test01$
