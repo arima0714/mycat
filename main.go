@@ -18,8 +18,8 @@ var (
 func doCat(f io.Reader) {
 	r := bufio.NewReader(f)
 	for {
-		r, _, err := r.ReadRune()
-		if err == io.EOF {
+		r, sz, err := r.ReadRune()
+		if sz == 0 && err == io.EOF {
 			break
 		} else if err != nil {
 			log.Fatal(err)
