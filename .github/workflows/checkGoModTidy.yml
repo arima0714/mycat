@@ -19,7 +19,4 @@ jobs:
       - name: check go mod tidy
         run: |
           go mod tidy
-          result="$(git status | grep modified | wc -l)"
-          if [ "$result" -gt 0 ] ; then
-              exit 1
-          fi
+          exit "$(git status | grep modified | wc -l)"
