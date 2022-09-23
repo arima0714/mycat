@@ -15,6 +15,14 @@ var (
 	showends = kingpin.Flag("show-ends", "show \"$\" end of line").Short('E').Bool()
 )
 
+func checkRune( r rune) bool{
+	if r == '\n' && *showends {
+		return true
+	}else{
+		return false
+	}
+}
+
 func doCat(f io.Reader) {
 	r := bufio.NewReader(f)
 	for {
@@ -23,7 +31,7 @@ func doCat(f io.Reader) {
 			break
 		} else if err != nil {
 			log.Fatal(err)
-		} else if r == '\n' && *showends {
+		} else if checkRune(r) {
 			fmt.Print("$")
 		}
 		fmt.Print(string(r))

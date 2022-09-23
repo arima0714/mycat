@@ -8,6 +8,7 @@ import (
 
 func ExampleDoCat() {
 	var f bytes.Buffer
+	*main.ExpShowends = true
 	f.Write([]byte("test1"))
 
 	main.ExpDoCat(&f)
@@ -27,7 +28,6 @@ func ExampleDoCat2() {
 	// test1$
 	// test2$
 	// test3$
-	*main.ExpShowends = false
 }
 
 func ExampleDoCat3() {
