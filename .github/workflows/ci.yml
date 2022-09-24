@@ -27,3 +27,18 @@ jobs:
         run: |
           make build
           make test
+
+  check_go_mod_tidy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: set up
+        uses: actions/setup-go@v2
+        with:
+          go-version: ${{ env.go_version }}
+        id: go
+      - name: check out
+        uses: actions/checkout@v3
+      - name: check go mod tidy
+        run: |
+          go mod tidy
+          git diff -s --exit-code go.sum
