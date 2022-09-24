@@ -47,7 +47,7 @@ func ExampleDoCat3() {
 func ExampleDoCat4() {
 	var f bytes.Buffer
 	*main.ExpShowends = true
-	f.Write([]byte("あああ１\nあああ２\nあああ３"))
+	f.Write([]byte("あいう１\nあいう２\nあいう３"))
 	main.ExpDoCat(&f)
 
 	// Output:
