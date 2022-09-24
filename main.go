@@ -15,7 +15,7 @@ var (
 	showends = kingpin.Flag("show-ends", "show \"$\" end of line").Short('E').Bool()
 )
 
-func checkRune(r rune) bool {
+func checkEoL(r rune) bool {
 	return *showends && r == '\n'
 }
 
@@ -29,7 +29,7 @@ func doCat(f io.Reader) {
 			}
 			log.Fatal(err)
 		}
-		if checkRune(r) {
+		if checkEoL(r) {
 			fmt.Print("$")
 		}
 		fmt.Print(string(r))
