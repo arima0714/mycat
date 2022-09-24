@@ -8,13 +8,15 @@ import (
 
 func ExampleDoCat() {
 	var f bytes.Buffer
-	*main.ExpShowends = true
-	f.Write([]byte("test1"))
+	*main.ExpShowends = false
+	f.Write([]byte("test1\ntest2\ntest3"))
 
 	main.ExpDoCat(&f)
 
 	// Output:
 	// test1
+	// test2
+	// test3
 }
 
 func ExampleDoCat2() {
@@ -49,7 +51,7 @@ func ExampleDoCat4() {
 	main.ExpDoCat(&f)
 
 	// Output:
-	// あああ１$
-	// あああ２$
-	// あああ３
+	// あいう１$
+	// あいう２$
+	// あいう３
 }
