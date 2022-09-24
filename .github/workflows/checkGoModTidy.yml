@@ -19,4 +19,4 @@ jobs:
       - name: check go mod tidy
         run: |
           go mod tidy
-          exit "$(git status | grep modified | wc -l)"
+          git diff -s --exit-code go.sum
