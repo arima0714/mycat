@@ -6,7 +6,6 @@ import (
 	"io"
 	"log"
 	"os"
-	"strings"
 
 	"gopkg.in/alecthomas/kingpin.v2"
 )
@@ -16,21 +15,24 @@ var (
 	showends = kingpin.Flag("show-ends", "show \"$\" end of line").Short('E').Bool()
 )
 
+func checkEOL(r rune) bool {
+	return *showends && r == '\n'
+}
+
 func doCat(f io.Reader) {
 	r := bufio.NewReader(f)
 	for {
-		line, err := r.ReadString('\n')
-		line = strings.Replace(line, "\n", "", -1)
-		fmt.Print(line)
-		if err == io.EOF {
-			break
-		} else {
-			endOfLine := ""
-			if *showends {
-				endOfLine += "$"
+		r, _, err := r.ReadRune()
+		if err != nil {
+			if err == io.EOF {
+				break
 			}
-			fmt.Println(endOfLine)
+			log.Fatal(err)
 		}
+		if checkEOL(r) {
+			fmt.Print("$")
+		}
+		fmt.Print(string(r))
 	}
 }
 

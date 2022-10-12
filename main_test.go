@@ -2,45 +2,48 @@ package main_test
 
 import (
 	"bytes"
+	"testing"
+
 	"github.com/arima0714/mycat"
-	"log"
-	"os"
+	"github.com/stretchr/testify/assert"
 )
 
-func ExampleDoCat() {
-	var stdin bytes.Buffer
-	stdin.Write([]byte("test1234"))
-
-	main.DoCat(&stdin)
-
-	// Output:
-	// test1234
+func resetShowends() {
+	*main.ExpShowends = false
 }
 
-func ExampleDoCat2() {
-	var stdin bytes.Buffer
-	*main.Showends = true
-	stdin.Write([]byte("test1234\n"))
+func ExampleExpDoCat() {
+	defer resetShowends()
+	
+	var f bytes.Buffer
+	f.Write([]byte("test1\ntest2\ntest3\n"))
+	main.ExpDoCat(&f)
 
-	main.DoCat(&stdin)
+	*main.ExpShowends = true
+	f.Write([]byte("あいう１\nあいう２\nあいう３"))
+	main.ExpDoCat(&f)
 
 	// Output:
-	// test1234$
-	*main.Showends = false
+	// test1
+	// test2
+	// test3
+	// あいう１$
+	// あいう２$
+	// あいう３
 }
 
-func ExampleDoCat3() {
-	*main.Showends = true
-	f, err := os.Open("./test/test00")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer f.Close()
+func TestCheckEOL(t *testing.T) {
+	defer resetShowends()
 
-	main.DoCat(f)
+	*main.ExpShowends = false
+	assert.Equal(t, main.ExpCheckEOL('a'), false)
 
-	// Output:
-	// test01$
-	// test02$
-	// test03
+	*main.ExpShowends = false
+	assert.Equal(t, main.ExpCheckEOL('\n'), false)
+	
+	*main.ExpShowends = true
+	assert.Equal(t, main.ExpCheckEOL('a'), false)
+	
+	*main.ExpShowends = true
+	assert.Equal(t, main.ExpCheckEOL('\n'), true)
 }

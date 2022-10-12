@@ -1,6 +1,6 @@
 name: go-ci
 
-on: [push, pull_request]
+on: [pull_request]
 
 env:
   go_version: ^1.19
@@ -16,16 +16,29 @@ jobs:
         id: go
       - name: check out
         uses: actions/checkout@v3
-      - name: check_go_mod_tidy
-        uses: evantorrie/mott-the-tidier@v1-beta
       - name: cache
         uses: actions/cache@v3
         with:
           path: ~/go/pkg/mod
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          key: ${{ runner.os }}-go-${{ hashFiles('go.sum') }}
           restore-keys: |
             ${{ runner.os }}-go-
       - name: build_and_test
         run: |
           make build
           make test
+
+  check_go_mod_tidy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: set up
+        uses: actions/setup-go@v2
+        with:
+          go-version: ${{ env.go_version }}
+        id: go
+      - name: check out
+        uses: actions/checkout@v3
+      - name: check go mod tidy
+        run: |
+          go mod tidy
+          git diff -s --exit-code go.sum
