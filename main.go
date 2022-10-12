@@ -12,11 +12,11 @@ import (
 
 var (
 	args     = kingpin.Arg("filenames", "filenames").Strings()
-	showends = kingpin.Flag("show-ends", "show \"$\" end of line").Short('E').Bool()
+	showEnds = kingpin.Flag("show-ends", "show \"$\" end of line").Short('E').Bool()
 )
 
-func checkEOL(r rune) bool {
-	return *showends && r == '\n'
+func isEOL(r rune) bool {
+	return *showEnds && r == '\n'
 }
 
 func doCat(f io.Reader) {
@@ -29,7 +29,7 @@ func doCat(f io.Reader) {
 			}
 			log.Fatal(err)
 		}
-		if checkEOL(r) {
+		if isEOL(r) {
 			fmt.Print("$")
 		}
 		fmt.Print(string(r))

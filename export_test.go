@@ -2,6 +2,6 @@ package main
 
 var (
 	ExpDoCat    = doCat
-	ExpShowends = showends
-	ExpCheckEOL = checkEOL
+	ExpShowends = showEnds
+	ExpCheckEOL = isEOL
 )
