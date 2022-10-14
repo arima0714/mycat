@@ -9,8 +9,7 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     steps:
-      - name: set up
-        uses: actions/setup-go@v2
+      - uses: actions/setup-go@v2
         with:
           go-version: ${{ env.go_version }}
         id: go
@@ -28,7 +27,7 @@ jobs:
           make build
           make test
 
-  check_go_mod_tidy:
+  go_mod_tidy:
     runs-on: ubuntu-latest
     steps:
       - name: set up
